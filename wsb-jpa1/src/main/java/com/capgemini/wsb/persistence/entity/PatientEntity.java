@@ -1,93 +1,49 @@
 package com.capgemini.wsb.persistence.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.List;
 
+import javax.persistence.*;
+@Getter
+@Setter
 @Entity
 @Table(name = "PATIENT")
 public class PatientEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long id;
 
-	@Column(nullable = false)
-	private String firstName;
+    @Column(nullable = false)
+    private String firstName;
 
-	@Column(nullable = false)
-	private String lastName;
+    @Column(nullable = false)
+    private String lastName;
 
-	@Column(nullable = false)
-	private String telephoneNumber;
+    @Column(nullable = false)
+    private Long telephoneNumber;
+    @Column(nullable = false)
+    private String email;
 
-	private String email;
+    @Column(nullable = false)
+    private Long patientNumber;
 
-	@Column(nullable = false)
-	private String patientNumber;
+    @Column(nullable = false)
+    private LocalDate dateOfBirth;
 
-	@Column(nullable = false)
-	private LocalDate dateOfBirth;
+    private Long contactPersonPhoneNumber;
 
-	public Long getId() {
-		return id;
-	}
+    //Jednostronna od strony rodzica
+    @OneToMany(mappedBy = "patientEntity",cascade = CascadeType.REMOVE)
+    private List<VisitEntity> visitEntity;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getTelephoneNumber() {
-		return telephoneNumber;
-	}
-
-	public void setTelephoneNumber(String telephoneNumber) {
-		this.telephoneNumber = telephoneNumber;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPatientNumber() {
-		return patientNumber;
-	}
-
-	public void setPatientNumber(String patientNumber) {
-		this.patientNumber = patientNumber;
-	}
-
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    //Dwustronna od strony rodzica
+    @ManyToMany()
+    private List<AddressEntity> addressEntity;
 
 }

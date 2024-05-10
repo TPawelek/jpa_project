@@ -1,49 +1,38 @@
 package com.capgemini.wsb.persistence.entity;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.*;
+@Getter
+@Setter
+@NoArgsConstructor
 
 @Entity
 @Table(name = "VISIT")
 public class VisitEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long id;
+    private String description;
+    @Column(nullable = false)
+    private LocalDateTime time;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	private String description;
+    //Dwustronna od strony rodzica
+    @OneToMany(mappedBy = "visitEntity")
+    private List<MedicalTreatmentEntity> medicalTreatmentEntities;
 
-	@Column(nullable = false)
-	private LocalDateTime time;
+    @ManyToOne
+    private PatientEntity patientEntity;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    private DoctorEntity doctorEntity;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public LocalDateTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalDateTime time) {
-		this.time = time;
-	}
 
 }
