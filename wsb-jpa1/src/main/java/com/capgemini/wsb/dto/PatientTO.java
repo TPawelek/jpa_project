@@ -17,11 +17,11 @@ public class PatientTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private Long telephoneNumber;
+    private String telephoneNumber;
     private String email;
     private Long patientNumber;
     private LocalDate dateOfBirth;
     private List<VisitTO> visit;
     private List<AddressTO> address;
-    private Long contactPersonPhoneNumber;
+    private String contactPersonPhoneNumber;
 }

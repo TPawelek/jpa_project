@@ -40,11 +40,11 @@ public class PatientServiceImplTest {
         patientEntity.setLastName(surname);
         patientEntity.setEmail("efeifh@wp.pl");
         patientEntity.setPatientNumber(745859658L);
-        patientEntity.setTelephoneNumber(7458965265L);
+        patientEntity.setTelephoneNumber("7458965265");
         patientEntity.setDateOfBirth(LocalDate.of(1990, 8, 10));
         patientEntity.setAddressEntity(List.of(new AddressEntity()));
         patientEntity.setVisitEntity(List.of(new VisitEntity()));
-        patientEntity.setContactPersonPhoneNumber(456456456L);
+        patientEntity.setContactPersonPhoneNumber("456456456");
         // When
         final PatientEntity updatedPatient = patientDao.update(patientEntity);
         patientDao.delete(updatedPatient.getId());
@@ -55,7 +55,7 @@ public class PatientServiceImplTest {
     }
 
     @Test
-    public void getPatientByIdTest() {
+    public void FindPatientByIdTest() {
         // Given
         PatientEntity patientEntity = new PatientEntity();
         patientEntity.setId(1L);
@@ -63,11 +63,11 @@ public class PatientServiceImplTest {
         patientEntity.setLastName(surname);
         patientEntity.setEmail("efeifh@wp.pl");
         patientEntity.setPatientNumber(745859658L);
-        patientEntity.setTelephoneNumber(7458965265L);
+        patientEntity.setTelephoneNumber("7458965265");
         patientEntity.setDateOfBirth(LocalDate.of(1990, 8, 10));
         patientEntity.setAddressEntity(List.of(new AddressEntity()));
         patientEntity.setVisitEntity(List.of(new VisitEntity()));
-        patientEntity.setContactPersonPhoneNumber(456456456L);
+        patientEntity.setContactPersonPhoneNumber("456456456");
         // When
         final PatientEntity updatedPatient = patientDao.update(patientEntity);
         PatientTO patientById = patientServiceImpl.findById(updatedPatient.getId());
@@ -75,5 +75,32 @@ public class PatientServiceImplTest {
         assertThat(patientById).isNotNull();
         assertThat(patientById.getFirstName()).isEqualTo(name);
         assertThat(patientById.getLastName()).isEqualTo(surname);
+    }
+
+    @Test
+    public void findAllVisitsByPatientIdTest() {
+        VisitEntity visit1 = new VisitEntity();
+        VisitEntity visit2 = new VisitEntity();
+        VisitEntity visit3 = new VisitEntity();
+        // Given
+        PatientEntity patientEntity = new PatientEntity();
+        patientEntity.setId(1L);
+        patientEntity.setFirstName(name);
+        patientEntity.setLastName(surname);
+        patientEntity.setEmail("efeifh@wp.pl");
+        patientEntity.setPatientNumber(745859658L);
+        patientEntity.setTelephoneNumber("7458965265");
+        patientEntity.setDateOfBirth(LocalDate.of(1990, 8, 10));
+        patientEntity.setAddressEntity(List.of(new AddressEntity()));
+        patientEntity.setVisitEntity(List.of(visit1, visit2, visit3));
+        patientEntity.setContactPersonPhoneNumber("456456456");
+
+
+        // When
+        final PatientEntity updatedPatient = patientDao.update(patientEntity);
+        PatientTO patientById = patientServiceImpl.findById(updatedPatient.getId());
+        // Then
+        assertThat(patientById.getVisit().size()).isNotNull();
+        assertThat(patientById.getVisit()).hasSize(3);
     }
 }

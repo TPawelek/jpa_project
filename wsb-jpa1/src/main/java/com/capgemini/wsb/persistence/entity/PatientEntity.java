@@ -26,7 +26,7 @@ public class PatientEntity {
     private String lastName;
 
     @Column(nullable = false)
-    private Long telephoneNumber;
+    private String telephoneNumber;
     @Column(nullable = false)
     private String email;
 
@@ -36,7 +36,7 @@ public class PatientEntity {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    private Long contactPersonPhoneNumber;
+    private String contactPersonPhoneNumber;
 
     //Jednostronna od strony rodzica
     @OneToMany(mappedBy = "patientEntity",cascade = CascadeType.REMOVE)
