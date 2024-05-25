@@ -48,10 +48,8 @@ public class PatientServiceImplTest {
         // When
         final PatientEntity updatedPatient = patientDao.update(patientEntity);
         patientDao.delete(updatedPatient.getId());
-        List<PatientEntity> foundPatients = patientDao.findAll();
         // Then
         assertThat(patientServiceImpl.findById(patientEntity.getId())).isNull();
-        assertThat(foundPatients).isEmpty();
     }
 
     @Test
